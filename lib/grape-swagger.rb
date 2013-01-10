@@ -53,6 +53,7 @@ module Grape
             @@hide_documentation_path = options[:hide_documentation_path]
             api_version = options[:api_version]
             base_path = options[:base_path]
+            path_suffix = options[:path_suffix] ||= ''
 
             desc 'Swagger compatible API description'
             get @@mount_path do
@@ -70,7 +71,7 @@ module Grape
               {
                 apiVersion: api_version,
                 swaggerVersion: "1.1",
-                basePath: base_path || "http://#{env['HTTP_HOST']}",
+                basePath: %{#{(base_path || "http://#{env['HTTP_HOST']}")}#{path_suffix}},
                 operations:[],
                 apis: routes_array
               }
